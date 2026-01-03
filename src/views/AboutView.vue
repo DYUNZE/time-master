@@ -14,14 +14,6 @@
   <div class="about">
     <button @click="triggerEffect">Click ME</button>
   </div>
-
-  <video ref="videoEl" class="effect-video" 
-  preload="auto" 
-  playsinline 
-  webkit-playsinline
-  muted >
-    <source src="@/assets/video/tran_l.webm" type="video/webm">你的浏览器不支持视频播放
-  </video>
 </template>
 
 <style>

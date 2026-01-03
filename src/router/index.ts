@@ -1,23 +1,70 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '@/views/LoginView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: LoginView,
+      redirect: '/login',
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: '/login',
+      name: 'Login',
+      component: ()=> import('@/views/LoginView.vue'),
+      meta:{
+        requiresAuth: false,
+        title:'登录',
+  
+      }
     },
+    {
+      path: '/home',
+      name: 'HomeLayout',
+      component: () => import('@/views/HomeLayout.vue'),
+      meta:{
+        requiresAuth: true,
+        title:'首页'
+      },
+      children:[
+        {
+          path: '',
+          name: 'HomeIndex',
+          component: () => import('@/views/HomeIndex.vue'),
+          meta:{title:'首页'}
+        },
+        {
+          path: 'chat',
+          name: 'Chat',
+          component: () => import('@/views/AboutView.vue'),
+          meta:{title:'聊天室'}
+        },
+      ]
+    },
+    {
+      path: '/:pathMatch(.*)',
+      redirect: '/login'
+    }
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  // 设置页面标题
+  document.title = (to.meta.title as string || '')+' | TimeMaster';
+
+  // TODO 验证登录(使用pinia即可)
+  const isLoggedIn = true;
+  // 需要登录但未登录 -> 登录页
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next('/login')
+  } 
+  // 已登录但访问登录页 -> 首页
+  else if(to.path === '/login' && isLoggedIn) {
+    next('/home')
+  }
+  // 其他 -> 正常跳转
+  else{
+    next()
+  }
 })
 
 export default router
