@@ -1,5 +1,9 @@
 @import './base.css';
 
+
+.icon{
+  width: var(--icon-size);
+}
 /* #app {
   max-width: 1280px;
   margin: 0 auto;

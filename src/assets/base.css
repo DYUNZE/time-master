@@ -4,6 +4,9 @@
   --dyz-c-black: #181818;
   --dyz-c-text-light-1: var(--vt-c-indigo);
   --dyz-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  /* 图标大小 */
+  --icon-size: 20px;
+  --active-btn-bg-color: #ee676e ;
 }
 
 /* semantic color variables for this project */
