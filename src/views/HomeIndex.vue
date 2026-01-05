@@ -1,7 +1,12 @@
-<script setup lang='ts'></script>
+<script setup lang='ts'>
+  import { ref } from 'vue'
+
+</script>
 
 <template>
-  <div class="two">2222</div>
+  <div class="two">
+
+  </div>
 </template>
 
 <style scoped>

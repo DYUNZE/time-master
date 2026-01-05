@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed,ref, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import HomeIcon from '@/components/icons/IconHome.vue';
 import SearchIcon from '@/components/icons/IconSearch.vue';
 import ChatIcon from '@/components/icons/IconChat.vue';
@@ -10,10 +10,10 @@ import GiftIcon from '@/components/icons/IconGift.vue';
 import CalendarIcon from '@/components/icons/IconCalendar.vue';
 import CloseIcon from '@/components/icons/IconClose.vue';
 import MenuIcon from '@/components/icons/IconMenu.vue';
+import { useMediaQuery } from '@vueuse/core';
 
 import {type MenuItem} from '@/types/menu';
 
-const router = useRouter();
 const route = useRoute();
 
 // 菜单数据
@@ -37,17 +37,21 @@ const isActive = computed(() => (path: string) => {
 const isMobileMenuOpen = ref(false);
 
 const maskEl = ref();
+
+const isMobile = useMediaQuery('(max-width: 576px)');
 // 打开折叠菜单
 const openMenu = () => {
+    document.body.style.overflow = 'hidden ';
     isMobileMenuOpen.value = true;
 };
 // 关闭折叠菜单
 const closeMenu = () => {
     isMobileMenuOpen.value = false;
+    document.body.style.overflow = ''; 
 };
 
-// 监听路由变化,自动关闭移动端菜单
-watch(() => route.path, () => {
+// 监听路由变化和媒体变化,自动关闭移动端菜单
+watch([() => route.path,isMobile], () => {
     if (isMobileMenuOpen.value) closeMenu();
 });
 
@@ -57,13 +61,13 @@ watch(() => route.path, () => {
 <template>
 
     <div class="min__menu">
-        <MenuIcon class="icon" @click="openMenu" aria-label="打开导航菜单" />
+        <MenuIcon class="min__menu__icon" @click="openMenu" aria-label="打开导航菜单" />
     </div>
 
     <!-- 针对于小屏的折叠菜单 -->
     <!-- 后期看情况优化 -->
     <div ref="maskEl" class="mask" :class="{ 'open': isMobileMenuOpen }">
-       <CloseIcon class="close__icon icon" @click="closeMenu" aria-label="关闭导航菜单" />
+       <CloseIcon class="close__icon" @click="closeMenu" aria-label="关闭导航菜单" />
        <div class="mask__nav">
         <RouterLink v-for="item in menuList" :key="item.name" :to="item.path" class="mask__nav__item" :class="{
                 'menu-item--active': isActive(item.path)
@@ -71,12 +75,12 @@ watch(() => route.path, () => {
                 <!-- 图标：添加aria-label提升可访问性 -->
                 <component :is="item.icon" class="icon" :aria-label="`${item.label}图标`" />
                 <!-- 文字：优化class命名，语义更清晰 -->
-                <span>{{ item.label }}</span>
+                <span class="title">{{ item.label }}</span>
         </RouterLink>
        </div>
        <div class="mask__footer">
             <img src="https://picsum.photos/200" alt="用户头像" class="footer-avatar" loading="lazy" />
-            <span>David</span>
+            <span class="title">David</span>
        </div>
     </div>
 
@@ -90,14 +94,14 @@ watch(() => route.path, () => {
                 <!-- 图标：添加aria-label提升可访问性 -->
                 <component :is="item.icon" class="icon" :aria-label="`${item.label}图标`" />
                 <!-- 文字：优化class命名，语义更清晰 -->
-                <span class="menu-item__label">{{ item.label }}</span>
+                <span class="menu-item__label title">{{ item.label }}</span>
             </RouterLink>
         </nav>
 
         <!-- 底部会员信息：优化class命名，添加语义 -->
         <div class="sidebar-footer">
             <img src="https://picsum.photos/200" alt="用户头像" class="footer-avatar" loading="lazy" />
-            <span class="footer-username">David</span>
+            <span class="footer-username title">David</span>
         </div>
     </div>
 </template>
@@ -107,45 +111,57 @@ watch(() => route.path, () => {
     padding: 1rem 0 0 1rem;
     display: none;
 }
-.min__menu>.icon{
+.min__menu__icon{
+    width: calc(var(--icon-size) + .7rem);
     cursor: pointer;
 }
 
 /* 遮罩全屏导航菜单 */
 .mask{
-    position: fixed;
-    width: 100vw;
-    height: 95vh;
-    background: var(--color-background);
-    display: none;
-}
-.mask.open{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    transform: translateY(-100%);
+    background: var(--color-background);
+    /* display: none; */
+    transition: transform .2s ease;
+}
+.mask.open{
+    /* display: flex; */
+    transform: translateY(0);
 }
 .mask__nav{
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
+    margin-top: 64px;
+    /* display: flex; */
+    /* flex-direction: column; */
     flex: 1;
-    gap: 2px;
+    letter-spacing: .2rem;
 }
 .close__icon{
     position: absolute;
     top: 1rem;
     right: 1rem;
     cursor: pointer;
+    width: calc(var(--icon-size) + .7rem);
+    border-radius: 50%;
+}
+.close__icon:hover{
+    background-color: var(--hover-btn-bg-color);
 }
 .mask__nav__item{
     display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    padding: 1rem 1.5rem;
+    gap: 2rem;
+    padding: 1rem 5rem;
     text-decoration: none;
     border-radius: 8px;
     color: var(--color-text);
+}
+.mask__nav__item:not(.menu-item--active):hover{
+    background-color: var(--hover-btn-bg-color);
 }
 .mask__footer{
     padding: 16px;
@@ -153,7 +169,11 @@ watch(() => route.path, () => {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-bottom: 64px;
 }
+
+
+/* ============================================================ */
 
 /* 侧边栏容器：优化布局，添加过渡动画 */
 .sidebar-container {
@@ -189,13 +209,14 @@ watch(() => route.path, () => {
 
 /* 激活态：优化样式，添加hover反馈 */
 .menu-item--active {
+    color: var(--active-btn-text-color);
     background: var(--active-btn-bg-color);
 }
 
 
 /* 正常态hover：提升交互体验 */
 .menu-item:not(.menu-item--active):hover {
-    background-color: rgba(153, 153, 153, 0.1);
+    background-color: var(--hover-btn-bg-color);
 }
 
 /* 侧边栏底部：优化样式 */

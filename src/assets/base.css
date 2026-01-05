@@ -1,24 +1,44 @@
-/* color palette from <https://github.com/vuejs/theme> */
+/* 色卡 */
 :root {
-  --dyz-c-white: #f7f7f7;
-  --dyz-c-black: #181818;
-  --dyz-c-text-light-1: var(--vt-c-indigo);
-  --dyz-c-text-dark-2: rgba(235, 235, 235, 0.64);
-  /* 图标大小 */
-  --icon-size: 20px;
-  --active-btn-bg-color: #ee676e ;
+  /* 白色 */
+  --white: #ffffff;
+  --white-2: #f3f3f3;
+  /* 黑色 */
+  --black: #181818;
+  --black-2: #6e6e6e;
+  /* 灰色 */
+  --grey: #afafaf;
+  --grey-2: #252525;
+  /* 金渐变 */
+  --gold: #ffd930;
 }
 
-/* semantic color variables for this project */
+/* 默认样式 白天 */
 :root {
-  --color-background: var(--dyz-c-white);
-  --color-text: var(--dyz-c-text-light-1);
+  /* 背景颜色 */
+  --color-background: var(--white);
+  /* 字体颜色 */
+  --color-text: var(--black-2);
+  /* 图标大小 */
+  --icon-size: 20px;
+  /* 按钮激活时背景颜色 */
+  --active-btn-bg-color: var(--white-2);
+  /* 鼠标悬浮时按钮背景颜色 */
+  --hover-btn-bg-color: var(--white-2);
+  /* 按钮激活时文字颜色 */
+  --active-btn-text-color: var(--black);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: var(--dyz-c-black);
-    --color-text: var(--dyz-c-text-dark-2);
+    --color-background: var(--black);
+    --color-text: var(--grey);
+    /* 鼠标悬浮时按钮背景颜色 */
+    --hover-btn-bg-color: var(--grey-2);
+    /* 按钮激活时背景颜色 */
+    --active-btn-bg-color: var(--grey-2) ;
+    /* 按钮激活时文字颜色 */
+    --active-btn-text-color: var(--white);
   }
 }
 

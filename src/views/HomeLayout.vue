@@ -1,16 +1,12 @@
 <script setup lang='ts'>
 import Sidebar from '@/components/Sidebar.vue';
-import MenuIcon from '@/components/icons/IconMenu.vue'
-import CloseIcon from '@/components/icons/IconClose.vue'
+import MusicPlayer from '@/components/MusicPlayer.vue';
 
 </script>
 
 <template>
-    <div class="mask"></div>
+    <MusicPlayer />
     <div class="home-layout">
-        <!-- <div class="min__menu">
-            <MenuIcon class="icon" />
-        </div> -->
         <Sidebar />
         <div class="home-content">
             <RouterView />
