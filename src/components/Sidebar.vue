@@ -12,11 +12,12 @@ import CloseIcon from '@/components/icons/IconClose.vue';
 import MenuIcon from '@/components/icons/IconMenu.vue';
 import LogoutIcon from '@/components/icons/IconLogout.vue';
 import { useMediaQuery } from '@vueuse/core';
-import { handleUserLogout } from '@/composables/userLogin';
+import { useLogin } from '@/composables/useLogin';
 
 import {type MenuItem} from '@/types/menu';
 
 const route = useRoute();
+const {handleUserLogout} = useLogin();
 
 // 菜单数据
 const menuList: Readonly<MenuItem[]> = [

@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import Clock from '@/components/Clock.vue';
 import { reactive } from 'vue';
-import { handleUserLogin } from '@/composables/userLogin';
+import { useLogin } from '@/composables/useLogin';
 import type { LoginForm } from '@/types/loginForm';
 
 
@@ -10,23 +10,25 @@ const userLoginForm = reactive<LoginForm>({
     password: ''
 });
 
+const { handleUserLogin } = useLogin();
+
 
 </script>
 
 <template>
-    <div class="login-form">
+    <form class="login-form" @submit.prevent="handleUserLogin(userLoginForm)">
         <Clock class="clock" />
         <h2 class="form-title">Time Master</h2>
         <div class="form-item">
             <label>用户名</label>
-            <input v-model="userLoginForm.username" type="text" placeholder="请输入用户名" class="form-input" />
+            <input autocomplete="username" v-model="userLoginForm.username" type="text" placeholder="请输入用户名" class="form-input" />
         </div>
         <div class="form-item">
             <label>密码</label>
-            <input v-model="userLoginForm.password" type="password" placeholder="请输入密码" class="form-input" />
+            <input autocomplete="current-password" v-model="userLoginForm.password" type="password" placeholder="请输入密码" class="form-input" />
         </div>
-        <button class="login-btn" @click="handleUserLogin(userLoginForm)">登录</button>
-    </div>
+        <button class="login-btn" type="submit">登录</button>
+    </form>
 </template>
 
 <style scoped>
