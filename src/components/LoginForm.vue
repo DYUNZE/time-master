@@ -1,19 +1,15 @@
 <script setup lang='ts'>
 import Clock from '@/components/Clock.vue';
 import { reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { handleUserLogin } from '@/composables/userLogin';
+import type { LoginForm } from '@/types/loginForm';
 
-const router = useRouter();
 
-const userData = reactive({
-  username: '',
-  password: ''
+const userLoginForm = reactive<LoginForm>({
+    username: '',
+    password: ''
 });
 
-const login = (): void => {
-  console.log(userData);
-  router.push('/Home');
-};
 
 </script>
 
@@ -23,13 +19,13 @@ const login = (): void => {
         <h2 class="form-title">Time Master</h2>
         <div class="form-item">
             <label>用户名</label>
-            <input v-model="userData.username" type="text" placeholder="请输入用户名" class="form-input" />
+            <input v-model="userLoginForm.username" type="text" placeholder="请输入用户名" class="form-input" />
         </div>
         <div class="form-item">
             <label>密码</label>
-            <input v-model="userData.password" type="password" placeholder="请输入密码" class="form-input" />
+            <input v-model="userLoginForm.password" type="password" placeholder="请输入密码" class="form-input" />
         </div>
-        <button class="login-btn" @click="login">登录</button>
+        <button class="login-btn" @click="handleUserLogin(userLoginForm)">登录</button>
     </div>
 </template>
 
@@ -84,8 +80,8 @@ const login = (): void => {
     background: linear-gradient(135deg, #a7d9ff, #0f88f0);
 }
 
-@media (max-width: 1024px){
-    .form-input{
+@media (max-width: 1024px) {
+    .form-input {
         padding: 1rem 4.5rem 1rem 1rem;
     }
 }

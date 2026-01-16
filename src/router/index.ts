@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores/useUserStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
           component: () => import('@/views/AboutView.vue'),
           meta:{title:'聊天室'}
         },
+        {
+          path: 'plan',
+          name: 'Plan',
+          component: ()=> import('@/views/PlanView.vue'),
+        }
       ]
     },
     {
@@ -52,7 +58,8 @@ router.beforeEach((to, from, next) => {
   document.title = (to.meta.title as string || '')+' | TimeMaster';
 
   // TODO 验证登录(使用pinia即可)
-  const isLoggedIn = true;
+  const userStore = useUserStore()
+  const isLoggedIn = userStore.getLoginState;
   // 需要登录但未登录 -> 登录页
   if (to.meta.requiresAuth && !isLoggedIn) {
     next('/login')

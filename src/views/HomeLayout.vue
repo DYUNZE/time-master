@@ -1,11 +1,9 @@
 <script setup lang='ts'>
 import Sidebar from '@/components/Sidebar.vue';
-import MusicPlayer from '@/components/MusicPlayer.vue';
 
 </script>
 
 <template>
-    <MusicPlayer />
     <div class="home-layout">
         <Sidebar />
         <div class="home-content">

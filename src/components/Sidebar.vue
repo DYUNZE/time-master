@@ -10,7 +10,9 @@ import GiftIcon from '@/components/icons/IconGift.vue';
 import CalendarIcon from '@/components/icons/IconCalendar.vue';
 import CloseIcon from '@/components/icons/IconClose.vue';
 import MenuIcon from '@/components/icons/IconMenu.vue';
+import LogoutIcon from '@/components/icons/IconLogout.vue';
 import { useMediaQuery } from '@vueuse/core';
+import { handleUserLogout } from '@/composables/userLogin';
 
 import {type MenuItem} from '@/types/menu';
 
@@ -20,7 +22,7 @@ const route = useRoute();
 const menuList: Readonly<MenuItem[]> = [
     { path: '/home', name: 'Home', label: '首页', icon: HomeIcon },
     { path: '/home/chat', name: 'Browse', label: '浏览', icon: SearchIcon },
-    { path: '', name: 'Calendar', label: '计划', icon: CalendarIcon },
+    { path: '/home/plan', name: 'Plan', label: '计划', icon: CalendarIcon },
     { path: '', name: 'ChatRoom', label: '聊天室', icon: ChatIcon },
     { path: '', name: 'Notice', label: '通知', icon: NotificationIcon },
     { path: '', name: 'Settings', label: '设置', icon: SettingIcon },
@@ -55,7 +57,6 @@ watch([() => route.path,isMobile], () => {
     if (isMobileMenuOpen.value) closeMenu();
 });
 
-
 </script>
 
 <template>
@@ -81,6 +82,7 @@ watch([() => route.path,isMobile], () => {
        <div class="mask__footer">
             <img src="https://picsum.photos/200" alt="用户头像" class="footer-avatar" loading="lazy" />
             <span class="title">David</span>
+            <LogoutIcon class="logout icon" @click="handleUserLogout"/>
        </div>
     </div>
 
@@ -100,8 +102,11 @@ watch([() => route.path,isMobile], () => {
 
         <!-- 底部会员信息：优化class命名，添加语义 -->
         <div class="sidebar-footer">
-            <img src="https://picsum.photos/200" alt="用户头像" class="footer-avatar" loading="lazy" />
-            <span class="footer-username title">David</span>
+            <div class="user-info">
+                <img src="https://picsum.photos/200" alt="用户头像" class="footer-avatar" loading="lazy" />
+                <span class="footer-username title">David</span>
+            </div>
+            <LogoutIcon class="logout icon" @click="handleUserLogout"/>
         </div>
     </div>
 </template>
@@ -135,7 +140,7 @@ watch([() => route.path,isMobile], () => {
     transform: translateY(0);
 }
 .mask__nav{
-    margin-top: 64px;
+    margin-top: 7rem;
     /* display: flex; */
     /* flex-direction: column; */
     flex: 1;
@@ -155,11 +160,13 @@ watch([() => route.path,isMobile], () => {
 .mask__nav__item{
     display: flex;
     gap: 2rem;
-    padding: 1rem 5rem;
+    padding: 1rem 8rem;
     text-decoration: none;
     border-radius: 8px;
     color: var(--color-text);
 }
+
+
 .mask__nav__item:not(.menu-item--active):hover{
     background-color: var(--hover-btn-bg-color);
 }
@@ -170,6 +177,25 @@ watch([() => route.path,isMobile], () => {
     align-items: center;
     gap: 12px;
     margin-bottom: 64px;
+}
+.mask__footer .logout{
+    width: calc(var(--icon-size) + .7rem);
+}
+
+
+.mask__nav__item span,
+.mask__footer span{
+    font-size: 1.2rem;
+}
+
+.mask__nav__item .icon{
+    width: calc(var(--icon-size) + .2rem);
+}
+
+.mask__footer .footer-avatar{
+    width: 50px;
+    height: 50px;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -219,13 +245,25 @@ watch([() => route.path,isMobile], () => {
     background-color: var(--hover-btn-bg-color);
 }
 
-/* 侧边栏底部：优化样式 */
-.sidebar-footer {
+/* ===========================底部样式====================================== */
+
+
+.sidebar-footer{
     padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 侧边栏底部：优化样式 */
+.sidebar-footer .user-info {
     border-top: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     gap: 12px;
+}
+.logout{
+    cursor: pointer;
 }
 
 .footer-avatar {
@@ -245,6 +283,11 @@ watch([() => route.path,isMobile], () => {
     .menu-item__label,
     .footer-username {
         display: none;
+    }
+
+    .sidebar-footer {
+        flex-direction: column;
+        gap: 1.2rem;
     }
 
     /* 折叠时菜单项内间距优化 */
