@@ -6,7 +6,6 @@ import SearchIcon from '@/components/icons/IconSearch.vue';
 import ChatIcon from '@/components/icons/IconChat.vue';
 import NotificationIcon from '@/components/icons/IconNotification.vue';
 import SettingIcon from '@/components/icons/IconSetting.vue';
-import GiftIcon from '@/components/icons/IconGift.vue';
 import CalendarIcon from '@/components/icons/IconCalendar.vue';
 import CloseIcon from '@/components/icons/IconClose.vue';
 import MenuIcon from '@/components/icons/IconMenu.vue';
@@ -62,32 +61,6 @@ watch([() => route.path,isMobile], () => {
 </script>
 
 <template>
-
-    <div class="min__menu">
-        <MenuIcon class="min__menu__icon" @click="openMenu" aria-label="打开导航菜单" />
-    </div>
-
-    <!-- 针对于小屏的折叠菜单 -->
-    <!-- 后期看情况优化 -->
-    <div ref="maskEl" class="mask" :class="{ 'open': isMobileMenuOpen }">
-       <CloseIcon class="close__icon" @click="closeMenu" aria-label="关闭导航菜单" />
-       <div class="mask__nav">
-        <RouterLink v-for="item in menuList" :key="item.name" :to="item.path" class="mask__nav__item" :class="{
-                'menu-item--active': isActive(item.path)
-            }">
-                <!-- 图标：添加aria-label提升可访问性 -->
-                <component :is="item.icon" class="icon" :aria-label="`${item.label}图标`" />
-                <!-- 文字：优化class命名，语义更清晰 -->
-                <span class="title">{{ item.label }}</span>
-        </RouterLink>
-       </div>
-       <div class="mask__footer">
-            <img src="https://picsum.photos/200" alt="用户头像" class="footer-avatar" loading="lazy" />
-            <span class="title">David</span>
-            <LogoutIcon class="logout icon" @click="handleUserLogout"/>
-       </div>
-    </div>
-
     <!-- 侧边导航栏 -->
     <div class="sidebar-container">
         <!-- 导航菜单 -->
@@ -114,92 +87,6 @@ watch([() => route.path,isMobile], () => {
 </template>
 
 <style scoped>
-.min__menu{
-    padding: 1rem 0 0 1rem;
-    display: none;
-}
-.min__menu__icon{
-    width: calc(var(--icon-size) + .7rem);
-    cursor: pointer;
-}
-
-/* 遮罩全屏导航菜单 */
-.mask{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    transform: translateY(-100%);
-    background: var(--color-background);
-    /* display: none; */
-    transition: transform .2s ease; 
-    z-index: 99;
-}
-.mask.open{
-    /* display: flex; */
-    transform: translateY(0);
-}
-.mask__nav{
-    margin-top: 7rem;
-    /* display: flex; */
-    /* flex-direction: column; */
-    flex: 1;
-    letter-spacing: .2rem;
-}
-.close__icon{
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    cursor: pointer;
-    width: calc(var(--icon-size) + .7rem);
-    border-radius: 50%;
-}
-.close__icon:hover{
-    background-color: var(--hover-btn-bg-color);
-}
-.mask__nav__item{
-    display: flex;
-    gap: 1.8rem;
-    padding: 1rem 8rem;
-    text-decoration: none;
-    border-radius: 8px;
-    color: var(--color-text);
-}
-
-
-.mask__nav__item:not(.menu-item--active):hover{
-    background-color: var(--hover-btn-bg-color);
-}
-.mask__footer{
-    padding: 16px;
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 64px;
-}
-.mask__footer .logout{
-    width: calc(var(--icon-size) + .7rem);
-}
-
-
-.mask__nav__item span,
-.mask__footer span{
-    font-size: 1.2rem;
-}
-
-.mask__nav__item .icon{
-    width: calc(var(--icon-size) + .2rem);
-}
-
-.mask__footer .footer-avatar{
-    width: 50px;
-    height: 50px;
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
-}
 
 
 /* ============================================================ */
@@ -275,7 +162,6 @@ watch([() => route.path,isMobile], () => {
     border-radius: 50%;
     flex-shrink: 0;
     object-fit: cover;
-    /* 头像裁剪，防止拉伸 */
 }
 
 @media (max-width: 834px) {
@@ -304,9 +190,6 @@ watch([() => route.path,isMobile], () => {
         display: none;
     }
     
-    .min__menu{
-        display: block;
-    }
 }
 
 </style>
