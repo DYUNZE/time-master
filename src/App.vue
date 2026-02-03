@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
+import { transition } from '@vueuse/core';
+
 </script>
 
 <template>
-  <RouterView />
+    <router-view />
+   
 </template>
 
 <style scoped>
+
+
 </style>

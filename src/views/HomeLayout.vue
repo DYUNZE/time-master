@@ -7,12 +7,39 @@ import Sidebar from '@/components/Sidebar.vue';
     <div class="home-layout">
         <Sidebar />
         <div class="home-content">
-            <RouterView />
+            <router-view v-slot="{ Component }">
+                <transition name="fade" mode="out-in">
+                    <component :is="Component" :key="$route.fullPath" />
+                </transition>
+            </router-view>
         </div>
     </div>
 </template>
 
 <style scoped>
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-enter-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+/* ------------------ */
 .home-layout {
     display: flex;
     height: 100vh;
@@ -27,7 +54,7 @@ import Sidebar from '@/components/Sidebar.vue';
 }
 
 @media (max-width: 576px) {
-    .home-layout{
+    .home-layout {
         flex-direction: column;
     }
 }

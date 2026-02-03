@@ -1,11 +1,9 @@
-<script setup lang='ts'></script>
+<script setup lang='ts'>
+import Plan from '@/components/plan/Plan.vue';
+</script>
 
 <template>
-    <div class="head" style="width: 100%;">
-        head
-        <hr style="width: 100%;"/>
-    </div>
-    
+    <Plan/>
 </template>
 
 <style scoped></style>

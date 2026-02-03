@@ -11,6 +11,7 @@ import CalendarIcon from '@/components/icons/IconCalendar.vue';
 import CloseIcon from '@/components/icons/IconClose.vue';
 import MenuIcon from '@/components/icons/IconMenu.vue';
 import LogoutIcon from '@/components/icons/IconLogout.vue';
+import HammerIcon from '@/components/icons/IconHammer.vue';
 import { useMediaQuery } from '@vueuse/core';
 import { useLogin } from '@/composables/useLogin';
 
@@ -27,7 +28,7 @@ const menuList: Readonly<MenuItem[]> = [
     { path: '', name: 'ChatRoom', label: '聊天室', icon: ChatIcon },
     { path: '', name: 'Notice', label: '通知', icon: NotificationIcon },
     { path: '', name: 'Settings', label: '设置', icon: SettingIcon },
-    { path: '', name: 'Gift', label: '礼品', icon: GiftIcon },
+    { path: '', name: 'GameFactory', label: '游戏工厂', icon: HammerIcon },
 ];
 
 // 激活判断
@@ -134,7 +135,8 @@ watch([() => route.path,isMobile], () => {
     transform: translateY(-100%);
     background: var(--color-background);
     /* display: none; */
-    transition: transform .2s ease;
+    transition: transform .2s ease; 
+    z-index: 99;
 }
 .mask.open{
     /* display: flex; */
@@ -160,7 +162,7 @@ watch([() => route.path,isMobile], () => {
 }
 .mask__nav__item{
     display: flex;
-    gap: 2rem;
+    gap: 1.8rem;
     padding: 1rem 8rem;
     text-decoration: none;
     border-radius: 8px;
