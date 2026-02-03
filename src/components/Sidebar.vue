@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed,ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import HomeIcon from '@/components/icons/IconHome.vue';
 import SearchIcon from '@/components/icons/IconSearch.vue';
@@ -14,20 +14,18 @@ import HammerIcon from '@/components/icons/IconHammer.vue';
 import { useMediaQuery } from '@vueuse/core';
 import { useLogin } from '@/composables/useLogin';
 
-import {type MenuItem} from '@/types/menu';
+import { type MenuItem } from '@/types/menu';
 
 const route = useRoute();
-const {handleUserLogout} = useLogin();
+const { handleUserLogout } = useLogin();
 
 // 菜单数据
 const menuList: Readonly<MenuItem[]> = [
     { path: '/home', name: 'Home', label: '首页', icon: HomeIcon },
-    { path: '/home/chat', name: 'Browse', label: '浏览', icon: SearchIcon },
     { path: '/home/plan', name: 'Plan', label: '计划', icon: CalendarIcon },
-    { path: '', name: 'ChatRoom', label: '聊天室', icon: ChatIcon },
-    { path: '', name: 'Notice', label: '通知', icon: NotificationIcon },
-    { path: '', name: 'Settings', label: '设置', icon: SettingIcon },
+    { path: '/home/chat', name: 'ChatRoom', label: '聊天室', icon: ChatIcon },
     { path: '', name: 'GameFactory', label: '游戏工厂', icon: HammerIcon },
+    { path: '', name: 'Settings', label: '设置', icon: SettingIcon },
 ];
 
 // 激活判断
@@ -50,11 +48,11 @@ const openMenu = () => {
 // 关闭折叠菜单
 const closeMenu = () => {
     isMobileMenuOpen.value = false;
-    document.body.style.overflow = ''; 
+    document.body.style.overflow = '';
 };
 
 // 监听路由变化和媒体变化,自动关闭移动端菜单
-watch([() => route.path,isMobile], () => {
+watch([() => route.path, isMobile], () => {
     if (isMobileMenuOpen.value) closeMenu();
 });
 
@@ -81,12 +79,34 @@ watch([() => route.path,isMobile], () => {
                 <img src="https://picsum.photos/200" alt="用户头像" class="footer-avatar" loading="lazy" />
                 <span class="footer-username title">David</span>
             </div>
-            <LogoutIcon class="logout icon" @click="handleUserLogout"/>
+            <LogoutIcon class="logout icon" @click="handleUserLogout" />
         </div>
     </div>
+    <div class="mini__footer__bar">
+        <RouterLink v-for="item in menuList" :key="item.name" :to="item.path" class="menu-item" :class="{
+            'menu-item--active': isActive(item.path)
+        }">
+            <!-- 图标：添加aria-label提升可访问性 -->
+            <component :is="item.icon" class="icon" :aria-label="`${item.label}图标`" />
+            <!-- 文字：优化class命名，语义更清晰 -->
+            <span class="menu-item__label title">{{ item.label }}</span>
+        </RouterLink>
+    </div>
+
 </template>
 
 <style scoped>
+.mini__footer__bar {
+    border-top: 1px #f0f0f0 solid;
+    display: none;
+    z-index: var(--top-z-index);
+    position: fixed;
+    bottom: 0;
+    height: 64px;
+    width: 100vw;
+    background: #fff;
+    justify-content: space-around;
+}
 
 
 /* ============================================================ */
@@ -138,7 +158,7 @@ watch([() => route.path,isMobile], () => {
 /* ===========================底部样式====================================== */
 
 
-.sidebar-footer{
+.sidebar-footer {
     padding: 16px;
     display: flex;
     justify-content: space-between;
@@ -152,7 +172,8 @@ watch([() => route.path,isMobile], () => {
     align-items: center;
     gap: 12px;
 }
-.logout{
+
+.logout {
     cursor: pointer;
 }
 
@@ -186,10 +207,12 @@ watch([() => route.path,isMobile], () => {
 }
 
 @media (max-width: 576px) {
-    .sidebar-container{
+    .sidebar-container {
         display: none;
     }
-    
-}
 
+    .mini__footer__bar {
+        display: flex;
+    }
+}
 </style>

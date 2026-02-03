@@ -7,6 +7,7 @@ import Sidebar from '@/components/Sidebar.vue';
     <div class="home-layout">
         <Sidebar />
         <div class="home-content">
+            <div class="ad__bar" style="">留白</div>
             <el-scrollbar>
                 <router-view v-slot="{ Component }">
                     <transition name="fade" mode="out-in">
@@ -52,7 +53,16 @@ import Sidebar from '@/components/Sidebar.vue';
 .home-content {
     display: flex;
     justify-content: center;
-    padding: 64px .7rem;
+    flex-direction: column;
+    padding: 0 .7rem;
     flex: 1;
+}
+/* ------------------ */
+.ad__bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    overflow: hidden;
 }
 </style>

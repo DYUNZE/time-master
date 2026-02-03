@@ -28,6 +28,9 @@
   /* 按钮激活时文字颜色 */
   --active-btn-text-color: var(--black);
 }
+:root{
+  --top-z-index: 999;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
