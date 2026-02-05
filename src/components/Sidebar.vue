@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed} from 'vue';
 import { useRoute } from 'vue-router';
 import HomeIcon from '@/components/icons/IconHome.vue';
 import ChatIcon from '@/components/icons/IconChat.vue';
@@ -7,7 +7,6 @@ import SettingIcon from '@/components/icons/IconSetting.vue';
 import CalendarIcon from '@/components/icons/IconCalendar.vue';
 import LogoutIcon from '@/components/icons/IconLogout.vue';
 import HammerIcon from '@/components/icons/IconHammer.vue';
-import { useMediaQuery } from '@vueuse/core';
 import { useLogin } from '@/composables/useLogin';
 
 import { type MenuItem } from '@/types/menu';
@@ -27,28 +26,6 @@ const menuList: Readonly<MenuItem[]> = [
 // 激活判断
 const isActive = computed(() => (path: string) => {
     return route.path === path;
-});
-
-
-// 移动端菜单状态管理
-const isMobileMenuOpen = ref(false);
-
-
-const isMobile = useMediaQuery('(max-width: 576px)');
-// 打开折叠菜单
-const openMenu = () => {
-    document.body.style.overflow = 'hidden ';
-    isMobileMenuOpen.value = true;
-};
-// 关闭折叠菜单
-const closeMenu = () => {
-    isMobileMenuOpen.value = false;
-    document.body.style.overflow = '';
-};
-
-// 监听路由变化和媒体变化,自动关闭移动端菜单
-watch([() => route.path, isMobile], () => {
-    if (isMobileMenuOpen.value) closeMenu();
 });
 
 </script>

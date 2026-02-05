@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { transition } from '@vueuse/core';
+import Star from './components/effects/Star.vue';
+import { useGlobalTheme } from './composables/useGlobalTheme';
 
+const {isDark} = useGlobalTheme();
 </script>
 
 <template>
+    <Star v-if="isDark"/>
     <router-view />
    
 </template>

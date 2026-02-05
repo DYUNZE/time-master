@@ -1,13 +1,16 @@
 <script setup lang='ts'>
 import LoginForm from '@/components/LoginForm.vue';
+import { useGlobalTheme } from '@/composables/useGlobalTheme';
+
+const {isDark} = useGlobalTheme();
+
+
 </script>
 
 <template>
     <div class="login-page">
-        <div class="login-img-wrapper">
-            <!-- 后期可以考虑将图片分成若干份，通过动画来更直观的切换黑夜和白天 -->
-            <!-- 比如月亮和太阳 -->
-            <img src="@/assets/img/mountain.svg" class="login-img">
+        <div class="login-bg-wrapper">
+            <img v-if="!isDark" class="login-img" src="@/assets/img/mountain.svg">
         </div>
         <div class="login-form-wrapper">
             <LoginForm />
@@ -21,7 +24,7 @@ import LoginForm from '@/components/LoginForm.vue';
     width: 100vw;
     height: 100vh;
 
-    .login-img-wrapper {
+    .login-bg-wrapper {
         flex: 7;
         height: 100%;
         overflow: hidden;
@@ -33,6 +36,7 @@ import LoginForm from '@/components/LoginForm.vue';
             object-position: center;
         }
     }
+
     .login-form-wrapper {
         flex: 3;
         height: 100%;
@@ -45,7 +49,7 @@ import LoginForm from '@/components/LoginForm.vue';
 }
 
 @media (max-width: 768px) {
-    .login-img-wrapper {
+    .login-bg-wrapper {
         display: none;
     }
 

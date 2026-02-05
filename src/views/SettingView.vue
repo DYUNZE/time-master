@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { useToggle,useDark } from '@vueuse/core'
+import { useGlobalTheme } from '@/composables/useGlobalTheme';
 
 
-const isDark = useDark({
-  storageKey: 'theme',
-  valueLight: 'light'
-})
-const toggleDark = useToggle(isDark)
+const {toggleDark,isDark} = useGlobalTheme();
 </script>
 
 <template>

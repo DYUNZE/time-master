@@ -14,6 +14,8 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@tsparticles/slim": "^3.9.1",
+    "@tsparticles/vue3": "^3.0.1",
     "@vueuse/core": "^14.1.0",
     "aplayer": "^1.10.1",
     "element-plus": "^2.13.2",
