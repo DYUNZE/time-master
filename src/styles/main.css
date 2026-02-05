@@ -1,0 +1,9 @@
+@import './base.css';
+
+
+.icon{
+  width: var(--icon-size);
+}
+.title{
+  font-weight: bold;
+}

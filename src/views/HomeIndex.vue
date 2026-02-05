@@ -5,7 +5,7 @@
 
 <template>
   <div class="two">
-
+    Home
   </div>
 </template>
 
@@ -13,6 +13,5 @@
 .two{
   width: 400px;
   height: 400px;
-  background-color: #fff;
 }
 </style>

@@ -51,6 +51,7 @@ import Sidebar from '@/components/Sidebar.vue';
 }
 
 .home-content {
+    background: var(--home-content-bg-color);
     display: flex;
     justify-content: center;
     flex-direction: column;

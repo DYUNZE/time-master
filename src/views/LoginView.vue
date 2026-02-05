@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-    import LoginForm from '@/components/LoginForm.vue';
+import LoginForm from '@/components/LoginForm.vue';
 </script>
 
 <template>
@@ -15,44 +15,41 @@
     </div>
 </template>
 
-<style scoped>
-.login-page { 
+<style lang="scss" scoped>
+.login-page {
     display: flex;
     width: 100vw;
     height: 100vh;
-}
-.login-img-wrapper{ 
-    flex: 7;
-    height: 100%;
-    overflow: hidden;
-}
-.login-img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-.clock{
-    margin-bottom: 2rem;
+
+    .login-img-wrapper {
+        flex: 7;
+        height: 100%;
+        overflow: hidden;
+
+        .login-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+    .login-form-wrapper {
+        flex: 3;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 2rem;
+        box-shadow: 0px 15px 10px var(--login-wrapper-box-shadow-color);
+    }
 }
 
-.login-form-wrapper{
-    flex: 3;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 2rem;
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.08);
-}
-
-
-
-@media (max-width: 1024px){
-    .login-img-wrapper{
+@media (max-width: 768px) {
+    .login-img-wrapper {
         display: none;
     }
-    .login-form-wrapper{
+
+    .login-form-wrapper {
         box-shadow: none;
     }
 }

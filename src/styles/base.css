@@ -1,0 +1,107 @@
+/* 色卡 */
+:root {
+  /* 白色 */
+  --white: #ffffff;
+  --white-2: #f3f3f3;
+  --grey-white: #f0f0f0;
+  /* 黑色 */
+  --black: #f3f3f3;
+  --black-2: #6e6e6e;
+  /* 灰色 */
+  --grey: #afafaf;
+  --grey-2: #252525;
+  /* 金渐变 */
+  --gold: #58533b;
+}
+
+/* 默认样式 白天 */
+:root {
+  /* 背景颜色 */
+  --color-background: #FDFAF5;
+  /* 字体颜色 */
+  --color-text: #5C4F4A;
+  /* 图标大小 */
+  --icon-size: 20px;
+  /* 按钮激活时背景颜色 */
+  --active-btn-bg-color: #f5eee9;
+  /* 鼠标悬浮时按钮背景颜色 */
+  --hover-btn-bg-color: #f8f3f0;
+  /* 按钮激活时文字颜色 */
+  --active-btn-text-color: #252525;
+  --border-top-color: #f0f0f0;
+
+  /* login */
+  --login-title-color: #dfaf98;
+  --login-form-box-shadow-color: rgba(218, 164, 139, 0.2);
+  --login-btn-focus-color: #c98259b7;
+  --login-btn-bg-color: linear-gradient(135deg, #fcc5bd, #e4dcae);
+  --login-btn-bg-color-hover: linear-gradient(135deg, #f8eacd, #f0bf97);
+  --login-wrapper-box-shadow-color: rgba(179, 74, 74, 0.08);
+}
+
+:root {
+  --top-z-index: 999;
+}
+
+html.dark {
+  --color-background: linear-gradient(135deg, #0F0F12 0%, #1A1408 100%);
+  --color-text: #c5c4c4;
+  --hover-btn-bg-color: #252525;
+  --active-btn-bg-color: #252525;
+  --active-btn-text-color: #ffffff;
+  --border-top-color: #58533b;
+
+  /* ellement-plus 样式*/
+  --el-color-primary: #c2a148;
+  --el-fill-color-blank: #161616;
+
+  /* home */
+  --home-content-bg-color: #161616;
+  
+  /* login */
+  --login-title-color: #cacaca;
+  --login-form-box-shadow-color: rgba(94, 156, 197, 0.2);
+  --login-btn-focus-color: #5d90c0b7;
+  --login-btn-bg-color: linear-gradient(135deg, #3a8597, #4bb1b1);
+  --login-btn-bg-color-hover: linear-gradient(135deg, #47a4bb, #5695a5);
+  --login-wrapper-box-shadow-color: rgba(248, 248, 248, 0.3);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* 禁用点击高亮（去掉点击元素时的灰色背景） */
+a, button, input, textarea, div, span {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

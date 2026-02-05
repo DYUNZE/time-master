@@ -43,6 +43,16 @@ const router = createRouter({
           path: 'plan',
           name: 'Plan',
           component: ()=> import('@/views/PlanView.vue'),
+        },
+        {
+          path: 'game-factory',
+          name: 'GameFactory',
+          component: ()=> import('@/views/GameFactoryView.vue'),
+        },
+        {
+          path: 'setting',
+          name: 'Setting',
+          component: ()=> import('@/views/SettingView.vue'),
         }
       ]
     },

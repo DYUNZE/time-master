@@ -2,13 +2,9 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import HomeIcon from '@/components/icons/IconHome.vue';
-import SearchIcon from '@/components/icons/IconSearch.vue';
 import ChatIcon from '@/components/icons/IconChat.vue';
-import NotificationIcon from '@/components/icons/IconNotification.vue';
 import SettingIcon from '@/components/icons/IconSetting.vue';
 import CalendarIcon from '@/components/icons/IconCalendar.vue';
-import CloseIcon from '@/components/icons/IconClose.vue';
-import MenuIcon from '@/components/icons/IconMenu.vue';
 import LogoutIcon from '@/components/icons/IconLogout.vue';
 import HammerIcon from '@/components/icons/IconHammer.vue';
 import { useMediaQuery } from '@vueuse/core';
@@ -24,8 +20,8 @@ const menuList: Readonly<MenuItem[]> = [
     { path: '/home', name: 'Home', label: '首页', icon: HomeIcon },
     { path: '/home/plan', name: 'Plan', label: '计划', icon: CalendarIcon },
     { path: '/home/chat', name: 'ChatRoom', label: '聊天室', icon: ChatIcon },
-    { path: '', name: 'GameFactory', label: '游戏工厂', icon: HammerIcon },
-    { path: '', name: 'Settings', label: '设置', icon: SettingIcon },
+    { path: '/home/game-factory', name: 'GameFactory', label: '游戏工厂', icon: HammerIcon },
+    { path: '/home/setting', name: 'Setting', label: '设置', icon: SettingIcon },
 ];
 
 // 激活判断
@@ -37,7 +33,6 @@ const isActive = computed(() => (path: string) => {
 // 移动端菜单状态管理
 const isMobileMenuOpen = ref(false);
 
-const maskEl = ref();
 
 const isMobile = useMediaQuery('(max-width: 576px)');
 // 打开折叠菜单
@@ -86,26 +81,45 @@ watch([() => route.path, isMobile], () => {
         <RouterLink v-for="item in menuList" :key="item.name" :to="item.path" class="menu-item" :class="{
             'menu-item--active': isActive(item.path)
         }">
-            <!-- 图标：添加aria-label提升可访问性 -->
             <component :is="item.icon" class="icon" :aria-label="`${item.label}图标`" />
-            <!-- 文字：优化class命名，语义更清晰 -->
-            <span class="menu-item__label title">{{ item.label }}</span>
         </RouterLink>
     </div>
 
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@mixin menu-item-style {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    border-radius: 8px;
+    color: var(--color-text);
+
+    &--active {
+        color: var(--active-btn-text-color);
+        background: var(--active-btn-bg-color);
+    }
+
+    &:not(.menu-item--active):hover {
+        background-color: var(--hover-btn-bg-color);
+    }
+}
+
 .mini__footer__bar {
-    border-top: 1px #f0f0f0 solid;
+    box-shadow: 0 10px 10px 8px var(--border-top-color);
     display: none;
     z-index: var(--top-z-index);
     position: fixed;
     bottom: 0;
     height: 64px;
     width: 100vw;
-    background: #fff;
+    background: var(--color-background);
     justify-content: space-around;
+    .menu-item{
+        @include menu-item-style;
+    }
 }
 
 
@@ -115,79 +129,60 @@ watch([() => route.path, isMobile], () => {
 .sidebar-container {
     height: 100vh;
     width: 256px;
-    box-shadow: 10px 0 10px -8px rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 0 7px -8px var(--border-top-color);
     display: flex;
     flex-direction: column;
     position: relative;
     transition: width 0.3s ease-in-out;
-}
 
-/* 菜单列表：优化弹性布局，占满剩余空间 */
-.sidebar-menu {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 2px;
-    /* 菜单项之间添加小间距，视觉更清晰 */
-}
+    /* 菜单列表：优化弹性布局，占满剩余空间 */
+    .sidebar-menu {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 2px;
 
-/* 菜单项：优化样式、交互、禁用态 */
-.menu-item {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    padding: 1rem 1.5rem;
-    text-decoration: none;
-    border-radius: 8px;
-    color: var(--color-text);
-}
+        /* 菜单项之间添加小间距，视觉更清晰 */
+        /* 菜单项：优化样式、交互、禁用态 */
+        .menu-item {
+            @include menu-item-style;
+        }
 
-/* 激活态：优化样式，添加hover反馈 */
-.menu-item--active {
-    color: var(--active-btn-text-color);
-    background: var(--active-btn-bg-color);
-}
+    }
 
+    .sidebar-footer {
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-/* 正常态hover：提升交互体验 */
-.menu-item:not(.menu-item--active):hover {
-    background-color: var(--hover-btn-bg-color);
+        .user-info {
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            .footer-avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                flex-shrink: 0;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .logout {
+        cursor: pointer;
+    }
+
 }
 
 /* ===========================底部样式====================================== */
-
-
-.sidebar-footer {
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* 侧边栏底部：优化样式 */
-.sidebar-footer .user-info {
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logout {
-    cursor: pointer;
-}
-
-.footer-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    object-fit: cover;
-}
-
 @media (max-width: 834px) {
     .sidebar-container {
-        width: 64px;
+        width: 70px;
     }
 
     .menu-item__label,
