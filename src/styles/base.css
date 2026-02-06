@@ -15,13 +15,13 @@
 
   /* login */
   --login-title-color: #dfaf98;
-  --login-form-box-shadow-color: rgba(218, 164, 139, 0.2);
-  --login-btn-focus-color: #c98259b7;
+  --login-btn-focus-color: #fdc3b7da;
   --login-btn-bg-color: linear-gradient(135deg, #fcc5bd, #e4dcae);
-  --login-btn-bg-color-hover: linear-gradient(135deg, #f8eacd, #f0bf97);
   --login-wrapper-box-shadow-color: rgba(179, 74, 74, 0.08);
+  --login-btn-border: none;
 
   --bottom-menu-height: 64px;
+  --content-margin: 0 3rem;
 }
 
 :root {
@@ -45,10 +45,10 @@ html.dark {
   
   /* login */
   --login-title-color: #cacaca;
-  --login-form-box-shadow-color: rgba(94, 156, 197, 0.2);
-  --login-btn-focus-color: #5d90c0b7;
-  --login-btn-bg-color: linear-gradient(135deg, #3a8597, #4bb1b1);
-  --login-btn-bg-color-hover: linear-gradient(135deg, #47a4bb, #5695a5);
+  --login-btn-focus-color: #fff;
+  --login-btn-bg-color: rgba(45, 55, 72, 0.2);
+  --login-btn-border: 2px solid #b9b9b9;
+
   --login-wrapper-box-shadow-color: rgba(248, 248, 248, 0.3);
 }
 
@@ -63,6 +63,8 @@ html.dark {
 /* 禁用点击高亮（去掉点击元素时的灰色背景） */
 a, button, input, textarea, div, span {
   -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+  color: var(--color-text);
 }
 
 body {

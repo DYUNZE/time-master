@@ -9,18 +9,21 @@ import Sidebar from '@/components/Sidebar.vue';
         <div class="home-content">
             <div class="ad__bar" style="">留白</div>
             <el-scrollbar>
-                <router-view v-slot="{ Component }">
-                    <transition name="fade" mode="out-in">
-                        <component :is="Component" :key="$route.fullPath" />
-                    </transition>
-                </router-view>
+                <div class="real__content">
+                    <router-view v-slot="{ Component }">
+                        <transition name="fade" mode="out-in">
+                            <!-- 只取/home后面的第一级路径,孙路由变化完全不影响 -->
+                            <component :is="Component" :key="$route.matched[1]?.path || $route.path" />
+                        </transition>
+                    </router-view>
+                </div>
+
             </el-scrollbar>
         </div>
     </div>
 </template>
 
-<style scoped>
-
+<style lang="scss" scoped>
 .fade-enter-from {
     opacity: 0;
     transform: translateY(20px);
@@ -56,22 +59,26 @@ import Sidebar from '@/components/Sidebar.vue';
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: .7rem .7rem;
+    padding: .7rem 0;
     flex: 1;
+
+    .real__content {
+        margin: var(--content-margin);
+    }
 }
+
 /* ------------------ */
-.ad__bar{
+.ad__bar {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 64px;
     overflow: hidden;
 }
-@media (max-width: 576px) { 
+
+@media (max-width: 576px) {
     .home-content {
         padding-bottom: var(--bottom-menu-height);
     }
 }
-
-
 </style>

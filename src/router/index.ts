@@ -29,7 +29,7 @@ const router = createRouter({
       children:[
         {
           path: '',
-          name: 'HomeIndex',
+          name: 'Home',
           component: () => import('@/views/HomeIndex.vue'),
           meta:{title:'首页'}
         },
@@ -43,16 +43,26 @@ const router = createRouter({
           path: 'plan',
           name: 'Plan',
           component: ()=> import('@/views/PlanView.vue'),
+          meta:{title:'计划'}
         },
         {
           path: 'game-factory',
           name: 'GameFactory',
           component: ()=> import('@/views/GameFactoryView.vue'),
+          meta:{title:'游戏工厂'}
         },
         {
           path: 'setting',
           name: 'Setting',
           component: ()=> import('@/views/SettingView.vue'),
+          meta:{title:'设置'},
+          children:[
+            {
+              path: 'basic',
+              name: 'Basic',
+              component: ()=> import('@/views/setting/Basic.vue'),
+            }
+          ]
         }
       ]
     },

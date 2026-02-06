@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed} from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import HomeIcon from '@/components/icons/IconHome.vue';
 import ChatIcon from '@/components/icons/IconChat.vue';
@@ -25,7 +25,15 @@ const menuList: Readonly<MenuItem[]> = [
 
 // 激活判断
 const isActive = computed(() => (path: string) => {
-    return route.path === path;
+    // 仅精确匹配时激活，且排除子路由
+    if (path === '/home') {
+        return route.path === '/home';
+    }
+
+    // 其他路由仍保留“精确匹配 + 父路由匹配”逻辑
+    const isExactMatch = route.path === path;
+    const isParentMatch = path !== '/' && route.path.startsWith(`${path}/`);
+    return isExactMatch || isParentMatch;
 });
 
 </script>
@@ -70,9 +78,7 @@ const isActive = computed(() => (path: string) => {
     align-items: center;
     gap: 0.9rem;
     padding: 1rem 1.5rem;
-    text-decoration: none;
     border-radius: 8px;
-    color: var(--color-text);
 
     &--active {
         color: var(--active-btn-text-color);
@@ -94,7 +100,8 @@ const isActive = computed(() => (path: string) => {
     width: 100%;
     background: var(--color-background);
     justify-content: space-around;
-    .menu-item{
+
+    .menu-item {
         @include menu-item-style;
     }
 }

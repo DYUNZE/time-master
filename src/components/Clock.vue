@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted} from 'vue'
 
 // 定义 Canvas 相关引用
 const clockCanvas = ref<HTMLCanvasElement | null>(null)

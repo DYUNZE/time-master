@@ -10,4 +10,6 @@ import Plan from '@/components/plan/Plan.vue';
     
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

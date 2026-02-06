@@ -34,10 +34,11 @@ const { handleUserLogin } = useLogin();
 </template>
 
 <style lang="scss" scoped>
-.login-form{
-    .clock{
+.login-form {
+    .clock {
         margin-bottom: 2rem;
     }
+
     /* 表单标题 */
     .form-title {
         text-align: center;
@@ -63,24 +64,57 @@ const { handleUserLogin } = useLogin();
             border: 1px solid #ddd;
             border-radius: 4px;
             outline: none;
-            box-shadow: 8px 8px 25px var(--login-form-box-shadow-color);
-
+        
             &:focus {
-                border-color: var(--login-btn-focus-color);
+                box-shadow: 0 0 7px var(--login-btn-focus-color);
             }
         }
     }
+
     .login-btn {
         width: 100%;
         padding: 0.8rem;
-        border: none;
+        border: var(--login-btn-border);
         border-radius: .75rem;
         background: var(--login-btn-bg-color);
         color: #fff;
         font-size: 1rem;
         cursor: pointer;
+        position: relative;
+
         &:hover {
-            background: var(--login-btn-bg-color-hover);
+            box-shadow: 0 0 7px #fff;
+            &::before {
+                left: 25%;
+            }
+
+            &::after {
+                left: 75%;
+            }
+        }
+
+        &::before {
+            position: absolute;
+            content: "";
+            top: -2px;
+            left: 75%;
+            width: 15%;
+            height: 2px;
+            background: var(--color-background);
+            transform: skewX(-50deg);
+            transition: left 0.3s;
+        }
+
+        &::after {
+            position: absolute;
+            content: "";
+            bottom: -2px;
+            width: 15%;
+            height: 2px;
+            left: 20%;
+            background: var(--color-background);
+            transform: skewX(-60deg);
+            transition: left 0.3s;
         }
     }
 }
