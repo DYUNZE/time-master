@@ -85,13 +85,13 @@ const isActive = computed(() => (path: string) => {
 }
 
 .mini__footer__bar {
-    box-shadow: 0 10px 10px 8px var(--border-top-color);
+    box-shadow: 0 0px 10px 3px var(--border-top-color);
     display: none;
     z-index: var(--top-z-index);
     position: fixed;
     bottom: 0;
-    height: 64px;
-    width: 100vw;
+    height: var(--bottom-menu-height);
+    width: 100%;
     background: var(--color-background);
     justify-content: space-around;
     .menu-item{

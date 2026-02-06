@@ -56,7 +56,7 @@ import Sidebar from '@/components/Sidebar.vue';
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 0 .7rem;
+    padding: .7rem .7rem;
     flex: 1;
 }
 /* ------------------ */
@@ -67,4 +67,11 @@ import Sidebar from '@/components/Sidebar.vue';
     height: 64px;
     overflow: hidden;
 }
+@media (max-width: 576px) { 
+    .home-content {
+        padding-bottom: var(--bottom-menu-height);
+    }
+}
+
+
 </style>
