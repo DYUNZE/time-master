@@ -137,7 +137,6 @@ const isActive = computed(() => (path: string) => {
         align-items: center;
 
         .user-info {
-            border-top: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             gap: 12px;

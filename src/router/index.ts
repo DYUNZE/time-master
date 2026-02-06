@@ -63,7 +63,17 @@ const router = createRouter({
               path: 'basic',
               name: 'Basic',
               component: ()=> import('@/views/setting/Basic.vue'),
-            }
+            },
+            {
+              path: 'account',
+              name: 'Account',
+              component: ()=> import('@/views/setting/Account.vue'),
+            },
+            {
+              path:'prefer',
+              name: 'Prefer',
+              component: ()=> import('@/views/setting/Prefer.vue')
+            },
           ]
         }
       ]

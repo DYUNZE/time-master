@@ -15,6 +15,7 @@ declare module 'vue' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCalendar: typeof import('element-plus/es')['ElCalendar']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconCalendar: typeof import('./src/components/icons/IconCalendar.vue')['default']

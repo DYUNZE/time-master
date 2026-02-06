@@ -1,51 +1,58 @@
 <script setup lang="ts">
-import { useGlobalTheme } from '@/composables/useGlobalTheme';
 import type { MenuItem } from '@/types/menu';
-
-
-const { toggleDark, isDark } = useGlobalTheme();
+import { useRoute } from 'vue-router';
 
 const menuList: Readonly<MenuItem[]> = [
   { path: '/home/setting/basic', name: 'Basic', label: '基本信息' },
-  { path: '/home/plan', name: 'Plan', label: '账户' },
-  { path: '/home/chat', name: 'ChatRoom', label: '偏好设置' },
+  { path: '/home/setting/account', name: 'Account', label: '账户' },
+  { path: '/home/setting/prefer', name: 'Prefer', label: '偏好设置' },
   { path: '/home/game-factory', name: 'GameFactory', label: '邮箱通知' },
   { path: '/home/setting', name: 'Setting', label: '更多' },
 ];
 
+const route = useRoute();
+const isActive = (path: string) => {
+  return path === route.path;
+};
 </script>
 
 <template>
-  <div class="setting__box">
-    <div class="setting_title">
-      <h2>设置</h2>
+  <div class="setting__container">
+    <div class="setting__box">
+      <div class="setting_title">
+        <h1>设置</h1>
+      </div>
+      <div class="setting__bar">
+        <RouterLink v-for="item in menuList" :key="item.name" :to="item.path" class="menu-item" :class="{
+            'menu-item--active': isActive(item.path)
+        }">
+          <span>{{ item.label }}</span>
+        </RouterLink>
+      </div>
+      <div class="view__box">
+        <router-view></router-view>
+      </div>
     </div>
-    <div class="setting__bar">
-      <RouterLink v-for="item in menuList" :key="item.name" :to="item.path" class="menu-item">
-        <span>{{ item.label }}</span>
-      </RouterLink>
-    </div>
-    <div class="view__box">
-      <router-view></router-view>
-    </div>
-    <!-- <el-button @click="toggleDark()">
-      {{ isDark ? '切换到亮色模式' : '切换到暗色模式' }}
-    </el-button> -->
   </div>
+
 
 
 </template>
 
 <style lang="scss" scoped>
+.setting__container{
+  display: flex;
+  justify-content: center;
+}
 .setting__box {
+  max-width: 834px;
+  width: 100%;
   .view__box {
     margin-top: 1rem;
     border-radius: 1rch;
-    ;
-    border: 1px solid #444242;
+    border: 1px solid var(--setting-border-color);
   }
 
-  // display: flex;
   .setting_title {
     margin-bottom: 1.5rem;
   }
@@ -79,18 +86,19 @@ const menuList: Readonly<MenuItem[]> = [
           transform: scaleX(1);
         }
       }
-
-      &:active::after {
+      &--active::after {
         transform: scaleX(1);
       }
     }
   }
 }
-@media (max-width: 576px) { 
-  .setting__box{
-    .setting__bar{
+
+@media (max-width: 576px) {
+  .setting__box {
+    .setting__bar {
       gap: .8rem;
-      .menu-item{
+
+      .menu-item {
         font-size: .95rem;
       }
     }

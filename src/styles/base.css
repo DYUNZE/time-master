@@ -21,6 +21,8 @@
   --login-btn-border: none;
 
   --bottom-menu-height: 64px;
+  /* 边框颜色 */
+  --setting-border-color: #d6d5d5e3;
 }
 
 :root {
@@ -49,6 +51,10 @@ html.dark {
   --login-btn-border: 2px solid #b9b9b9;
 
   --login-wrapper-box-shadow-color: rgba(248, 248, 248, 0.3);
+
+  --border-color: #7e7e7e;
+
+  --setting-border-color: #444242;
 }
 
 *,
