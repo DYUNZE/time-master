@@ -82,6 +82,7 @@ a, button, input, textarea, div, span {
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   color: var(--color-text);
   background: var(--color-background);
   transition:

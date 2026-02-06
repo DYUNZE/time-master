@@ -105,6 +105,7 @@ const isActive = computed(() => (path: string) => {
 /* 侧边栏容器：优化布局，添加过渡动画 */
 .sidebar-container {
     height: 100vh;
+    height: 100dvh;
     width: 256px;
     box-shadow: 10px 0 7px -8px var(--border-top-color);
     display: flex;

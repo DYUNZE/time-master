@@ -23,6 +23,7 @@ const {isDark} = useGlobalTheme();
     display: flex;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
 
     .login-bg-wrapper {
         flex: 7;

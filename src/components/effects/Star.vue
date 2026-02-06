@@ -14,7 +14,7 @@ const particlesOptions = ref({
     interactivity: {
         events: {
             onClick: {
-                enable: true,
+                enable: false,
                 mode: 'push'       // 或 'repulse(排斥)', 'bubble(变大)'...
             },
             onHover: {
@@ -30,7 +30,7 @@ const particlesOptions = ref({
             },
             repulse: {
                 // 悬浮排斥的有效距离
-                distance: 200,
+                distance: 100,
                 // 排斥效果的持续时间
                 duration: 0.4
             }
@@ -59,7 +59,7 @@ const particlesOptions = ref({
             },
             random: false,
             speed: 2,
-            straight: false
+            straight: false,
         },
         // 粒子数量配置
         number: {
@@ -96,7 +96,7 @@ const particlesOptions = ref({
 .particles-container {
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: -1;          
     /* 做背景用就放最底层 */
 }
 </style>

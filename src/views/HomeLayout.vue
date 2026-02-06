@@ -48,7 +48,7 @@ import Sidebar from '@/components/Sidebar.vue';
 .home-layout {
     display: flex;
     height: 100vh;
-    overflow: hidden;
+    height: 100dvh;
 }
 
 .home-content {
