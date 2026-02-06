@@ -10,8 +10,7 @@ const menuList: Readonly<MenuItem[]> = [
   { path: '/home/plan', name: 'Plan', label: '账户' },
   { path: '/home/chat', name: 'ChatRoom', label: '偏好设置' },
   { path: '/home/game-factory', name: 'GameFactory', label: '邮箱通知' },
-  { path: '/home/setting', name: 'Setting', label: '反馈' },
-  { path: '/home/setting', name: 'Setting', label: '关于' },
+  { path: '/home/setting', name: 'Setting', label: '更多' },
 ];
 
 </script>
@@ -23,7 +22,7 @@ const menuList: Readonly<MenuItem[]> = [
     </div>
     <div class="setting__bar">
       <RouterLink v-for="item in menuList" :key="item.name" :to="item.path" class="menu-item">
-        <span class="menu-item__label title">{{ item.label }}</span>
+        <span>{{ item.label }}</span>
       </RouterLink>
     </div>
     <div class="view__box">
@@ -43,7 +42,7 @@ const menuList: Readonly<MenuItem[]> = [
     margin-top: 1rem;
     border-radius: 1rch;
     ;
-    border: 1px solid var(--color-text);
+    border: 1px solid #444242;
   }
 
   // display: flex;
@@ -83,6 +82,16 @@ const menuList: Readonly<MenuItem[]> = [
 
       &:active::after {
         transform: scaleX(1);
+      }
+    }
+  }
+}
+@media (max-width: 576px) { 
+  .setting__box{
+    .setting__bar{
+      gap: .8rem;
+      .menu-item{
+        font-size: .95rem;
       }
     }
   }

@@ -2,7 +2,7 @@
 
 <template>
     <div class="basic__box">
-        112321
+        <p v-for="i in 30">333</p>
     </div>
 </template>
 

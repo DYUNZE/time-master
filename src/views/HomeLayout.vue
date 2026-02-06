@@ -63,7 +63,7 @@ import Sidebar from '@/components/Sidebar.vue';
     flex: 1;
 
     .real__content {
-        margin: var(--content-margin);
+        margin: 0 3rem;
     }
 }
 
@@ -79,6 +79,10 @@ import Sidebar from '@/components/Sidebar.vue';
 @media (max-width: 576px) {
     .home-content {
         padding-bottom: var(--bottom-menu-height);
+
+        .real__content {
+            margin: 0 1.2rem;
+        }
     }
 }
 </style>
