@@ -16,7 +16,7 @@ const { handleUserLogout } = useLogin();
 
 // 菜单数据
 const menuList: Readonly<MenuItem[]> = [
-    { path: '/home', name: 'Home', label: '首页', icon: HomeIcon },
+    { path: '/home/index', name: 'Index', label: '首页', icon: HomeIcon },
     { path: '/home/plan', name: 'Plan', label: '计划', icon: CalendarIcon },
     { path: '/home/chat', name: 'ChatRoom', label: '聊天室', icon: ChatIcon },
     { path: '/home/game-factory', name: 'GameFactory', label: '游戏工厂', icon: HammerIcon },
@@ -25,12 +25,6 @@ const menuList: Readonly<MenuItem[]> = [
 
 // 激活判断
 const isActive = computed(() => (path: string) => {
-    // 仅精确匹配时激活，且排除子路由
-    if (path === '/home') {
-        return route.path === '/home';
-    }
-
-    // 其他路由仍保留“精确匹配 + 父路由匹配”逻辑
     const isExactMatch = route.path === path;
     const isParentMatch = path !== '/' && route.path.startsWith(`${path}/`);
     return isExactMatch || isParentMatch;

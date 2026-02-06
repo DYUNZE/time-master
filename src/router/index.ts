@@ -20,18 +20,17 @@ const router = createRouter({
     },
     {
       path: '/home',
-      name: 'HomeLayout',
       component: () => import('@/views/HomeLayout.vue'),
       meta:{
         requiresAuth: true,
         title:'首页'
       },
       children:[
+        {path:'',redirect:'/home/index'},
         {
-          path: '',
-          name: 'Home',
+          path: 'index',
+          name: 'Index',
           component: () => import('@/views/HomeIndex.vue'),
-          meta:{title:'首页'}
         },
         {
           path: 'chat',
@@ -53,10 +52,13 @@ const router = createRouter({
         },
         {
           path: 'setting',
-          name: 'Setting',
           component: ()=> import('@/views/SettingView.vue'),
           meta:{title:'设置'},
           children:[
+            {
+              path: '',
+              redirect: '/home/setting/basic'
+            },
             {
               path: 'basic',
               name: 'Basic',

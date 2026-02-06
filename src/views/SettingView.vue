@@ -27,9 +27,7 @@ const menuList: Readonly<MenuItem[]> = [
       </RouterLink>
     </div>
     <div class="view__box">
-      <router-view>
-    
-      </router-view>
+      <router-view></router-view>
     </div>
     <!-- <el-button @click="toggleDark()">
       {{ isDark ? '切换到亮色模式' : '切换到暗色模式' }}
