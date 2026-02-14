@@ -7,7 +7,10 @@ import SettingIcon from '@/components/icons/IconSetting.vue';
 import CalendarIcon from '@/components/icons/IconCalendar.vue';
 import LogoutIcon from '@/components/icons/IconLogout.vue';
 import HammerIcon from '@/components/icons/IconHammer.vue';
+import BookIcon from '@/components/icons/IconBook.vue';
+import MoreIcon from '@/components/icons/IconMore.vue';
 import { useLogin } from '@/composables/useLogin';
+import message from '@/utils/message';
 
 import { type MenuItem } from '@/types/menu';
 
@@ -19,6 +22,7 @@ const menuList: Readonly<MenuItem[]> = [
     { path: '/home/index', name: 'Index', label: '首页', icon: HomeIcon },
     { path: '/home/plan', name: 'Plan', label: '计划', icon: CalendarIcon },
     { path: '/home/chat', name: 'ChatRoom', label: '聊天室', icon: ChatIcon },
+    { path: '/home/library', name: 'Library', label: '图书馆', icon: BookIcon },
     { path: '/home/game-factory', name: 'GameFactory', label: '游戏工厂', icon: HammerIcon },
     { path: '/home/setting', name: 'Setting', label: '设置', icon: SettingIcon },
 ];
@@ -29,6 +33,17 @@ const isActive = computed(() => (path: string) => {
     const isParentMatch = path !== '/' && route.path.startsWith(`${path}/`);
     return isExactMatch || isParentMatch;
 });
+
+// 拆分菜单
+const showMenuList = computed(() => {
+    return menuList.slice(0, 4)
+})
+const foldMenuList = computed(() => {
+    return menuList.slice(4)
+})
+const alertT = ()=>{
+    message.success("正在考虑用全局遮罩还是局部伪类元素")
+}
 
 </script>
 
@@ -57,11 +72,16 @@ const isActive = computed(() => (path: string) => {
         </div>
     </div>
     <div class="mini__footer__bar">
-        <RouterLink v-for="item in menuList" :key="item.name" :to="item.path" class="menu-item" :class="{
+        <RouterLink v-for="item in showMenuList" :key="item.name" :to="item.path" class="menu-item" :class="{
             'menu-item--active': isActive(item.path)
         }">
             <component :is="item.icon" class="icon" :aria-label="`${item.label}图标`" />
         </RouterLink>
+        <template v-if="foldMenuList.length > 0">
+            <div class="menu-item" @click="alertT">
+                <MoreIcon class="icon" />
+            </div>
+        </template>
     </div>
 
 </template>
@@ -73,6 +93,7 @@ const isActive = computed(() => (path: string) => {
     gap: 0.9rem;
     padding: 1rem 1.5rem;
     border-radius: 8px;
+    cursor: pointer;
 
     &--active {
         color: var(--active-btn-text-color);

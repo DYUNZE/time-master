@@ -73,7 +73,8 @@ const isActive = (path: string) => {
         bottom: -4px;
         width: 100%;
         height: 1px;
-        background-color: aliceblue;
+        background-color: var(--setting-after-color);
+        // background-color: aliceblue;
         transform-origin: center;
         transition: transform 0.3s ease;
         transform: scaleX(0);

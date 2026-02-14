@@ -51,6 +51,12 @@ const router = createRouter({
           meta:{title:'游戏工厂'}
         },
         {
+          path: 'library',
+          name: 'Library',
+          component: ()=> import('@/views/LibraryView.vue'),
+          meta:{title:'图书馆'}
+        },
+        {
           path: 'setting',
           component: ()=> import('@/views/SettingView.vue'),
           meta:{title:'设置'},
