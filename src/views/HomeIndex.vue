@@ -11,7 +11,7 @@
 
 <style scoped>
 .two{
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  min-height: 400px;
 }
 </style>

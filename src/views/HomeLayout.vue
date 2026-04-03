@@ -52,6 +52,7 @@ import Sidebar from '@/components/Sidebar.vue';
     display: flex;
     height: 100vh;
     height: 100dvh;
+    overflow: hidden;
 }
 
 .home-content {
@@ -61,9 +62,16 @@ import Sidebar from '@/components/Sidebar.vue';
     flex-direction: column;
     padding: .7rem 0;
     flex: 1;
+    min-width: 0; /* 防止 flex 子项溢出 */
 
     .real__content {
         margin: 0 3rem;
+    }
+    
+    /* el-scrollbar 占满剩余空间 */
+    :deep(.el-scrollbar) {
+        flex: 1;
+        overflow: hidden;
     }
 }
 
