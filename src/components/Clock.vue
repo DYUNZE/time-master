@@ -6,13 +6,46 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted} from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { useGlobalTheme } from '@/composables/useGlobalTheme'
+
+const { isDark } = useGlobalTheme()
 
 // 定义 Canvas 相关引用
 const clockCanvas = ref<HTMLCanvasElement | null>(null)
 const clockContainer = ref<HTMLDivElement | null>(null)
 // 动画帧标识，用于销毁时清除
 let animationFrameId: number = 0
+
+// 根据主题返回配色方案
+const getThemeColors = () => {
+  if (isDark.value) {
+    return {
+      dialBorder: '#3a3a3c',
+      dialBg: 'rgba(30, 30, 30, 0.4)',
+      scaleMajor: '#c5c4c4',
+      scaleMinor: '#5a5a5c',
+      number: '#c5c4c4',
+      hourPointer: '#c5c4c4',
+      minutePointer: '#c5c4c4',
+      secondPointer: '#caa84a',
+      centerDot: '#caa84a',
+      centerDotBorder: '#c5c4c4',
+    }
+  }
+  return {
+    dialBorder: '#2c3e50',
+    dialBg: '#ffffff',
+    scaleMajor: '#2c3e50',
+    scaleMinor: '#bdc3c7',
+    number: '#2c3e50',
+    hourPointer: '#2c3e50',
+    minutePointer: '#2c3e50',
+    secondPointer: '#e74c3c',
+    centerDot: '#e74c3c',
+    centerDotBorder: '#2c3e50',
+  }
+}
 
 // 初始化 Canvas 并开始绘制时钟
 const initClock = () => {
@@ -22,6 +55,9 @@ const initClock = () => {
 
   const ctx = canvas.getContext('2d')
   if (!ctx) return
+
+  // 取消旧的动画帧，防止多次 init 造成叠加
+  cancelAnimationFrame(animationFrameId)
 
   // ========== 高清渲染核心：设备像素比适配 ==========
   const dpr = window.devicePixelRatio || 1
@@ -36,6 +72,8 @@ const initClock = () => {
   // 画布缩放，适配高清屏
   ctx.scale(dpr, dpr)
 
+  const colors = getThemeColors()
+
   // 绘制时钟的核心方法
   const drawClock = () => {
     // 每次绘制前清空画布（避免重影）
@@ -47,13 +85,13 @@ const initClock = () => {
     const radius = size / 2 - 10
 
     // 1. 绘制表盘外圆
-    drawDial(ctx, centerX, centerY, radius)
+    drawDial(ctx, centerX, centerY, radius, colors)
     // 2. 绘制表盘刻度（60个小刻度，12个大刻度）
-    drawScale(ctx, centerX, centerY, radius)
+    drawScale(ctx, centerX, centerY, radius, colors)
     // 3. 绘制表盘数字（1-12）
-    drawNumber(ctx, centerX, centerY, radius)
+    drawNumber(ctx, centerX, centerY, radius, colors)
     // 4. 获取当前时间，绘制三根指针
-    drawPointers(ctx, centerX, centerY, radius)
+    drawPointers(ctx, centerX, centerY, radius, colors)
 
     // 帧动画循环，保证走时流畅
     animationFrameId = requestAnimationFrame(drawClock)
@@ -67,15 +105,16 @@ const drawDial = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
+  colors: ReturnType<typeof getThemeColors>
 ) => {
   ctx.save() // 保存当前绘图状态
   ctx.beginPath()
   ctx.arc(x, y, r, 0, 2 * Math.PI)
-  ctx.strokeStyle = '#2c3e50' // 表盘边框颜色
-  ctx.lineWidth = 4 // 表盘边框宽度
+  ctx.strokeStyle = colors.dialBorder // 表盘边框颜色
+  ctx.lineWidth = isDark.value ? 2 : 4 // 暗色边框更细
   ctx.stroke()
-  ctx.fillStyle = '#ffffff' // 表盘背景色
+  ctx.fillStyle = colors.dialBg // 表盘背景色
   ctx.fill()
   ctx.restore() // 恢复绘图状态
 }
@@ -85,7 +124,8 @@ const drawScale = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
+  colors: ReturnType<typeof getThemeColors>
 ) => {
   ctx.save()
   for (let i = 0; i < 60; i++) {
@@ -103,8 +143,8 @@ const drawScale = (
     ctx.moveTo(startX, startY)
     ctx.lineTo(endX, endY)
     // 大刻度颜色深、线宽粗，小刻度反之
-    ctx.strokeStyle = i % 5 === 0 ? '#2c3e50' : '#bdc3c7'
-    ctx.lineWidth = i % 5 === 0 ? 3 : 1
+    ctx.strokeStyle = i % 5 === 0 ? colors.scaleMajor : colors.scaleMinor
+    ctx.lineWidth = i % 5 === 0 ? (isDark.value ? 2 : 3) : 1
     ctx.stroke()
   }
   ctx.restore()
@@ -115,11 +155,12 @@ const drawNumber = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
+  colors: ReturnType<typeof getThemeColors>
 ) => {
   ctx.save()
   ctx.font = `${r / 8}px 'Microsoft YaHei', sans-serif` // 字体大小随半径自适应
-  ctx.fillStyle = '#2c3e50' // 数字颜色
+  ctx.fillStyle = colors.number // 数字颜色
   ctx.textAlign = 'center' // 水平居中
   ctx.textBaseline = 'middle' // 垂直居中
 
@@ -139,7 +180,8 @@ const drawPointers = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
+  colors: ReturnType<typeof getThemeColors>
 ) => {
   const now = new Date()
   const hours = now.getHours() % 12 // 转12小时制
@@ -155,14 +197,14 @@ const drawPointers = (
   // 时针：30度/小时 + 分针补间（360度/12小时=30度/小时）
   const hourAngle = ((hours + minutes / 60) * 30 - 90) * Math.PI / 180
 
-  // 绘制秒针（细长，红色）
-  drawPointer(ctx, x, y, secondAngle, r * 0.85, 1, '#e74c3c', true)
-  // 绘制分针（中等，深灰）
-  drawPointer(ctx, x, y, minuteAngle, r * 0.7, 2, '#2c3e50', false)
-  // 绘制时针（短粗，深灰）
-  drawPointer(ctx, x, y, hourAngle, r * 0.5, 4, '#2c3e50', false)
+  // 绘制秒针（细长）
+  drawPointer(ctx, x, y, secondAngle, r * 0.85, 1, colors.secondPointer, true)
+  // 绘制分针（中等）
+  drawPointer(ctx, x, y, minuteAngle, r * 0.7, 2, colors.minutePointer, false)
+  // 绘制时针（短粗）
+  drawPointer(ctx, x, y, hourAngle, r * 0.5, 4, colors.hourPointer, false)
   // 绘制指针中心圆点
-  drawCenterDot(ctx, x, y, 6)
+  drawCenterDot(ctx, x, y, 6, colors)
 }
 
 // 通用绘制指针方法
@@ -205,14 +247,15 @@ const drawCenterDot = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  size: number
+  size: number,
+  colors: ReturnType<typeof getThemeColors>
 ) => {
   ctx.save()
   ctx.beginPath()
   ctx.arc(x, y, size, 0, 2 * Math.PI)
-  ctx.fillStyle = '#e74c3c'
+  ctx.fillStyle = colors.centerDot
   ctx.fill()
-  ctx.strokeStyle = '#2c3e50'
+  ctx.strokeStyle = colors.centerDotBorder
   ctx.lineWidth = 1
   ctx.stroke()
   ctx.restore()
@@ -229,6 +272,11 @@ onMounted(() => {
 onUnmounted(() => {
   cancelAnimationFrame(animationFrameId)
   window.removeEventListener('resize', initClock)
+})
+
+// 监听主题变化，重新绘制
+watch(isDark, () => {
+  initClock()
 })
 </script>
 

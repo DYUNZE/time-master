@@ -81,7 +81,10 @@ import Sidebar from '@/components/Sidebar.vue';
     justify-content: center;
     align-items: center;
     height: 64px;
+    margin-bottom: 0.75rem;
     overflow: hidden;
+    box-shadow: 0 1px 0 0 rgba(166, 124, 82, 0.08), 0 4px 12px rgba(166, 124, 82, 0.04);
+    z-index: 1;
 }
 
 @media (max-width: 576px) {
