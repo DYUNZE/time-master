@@ -66,12 +66,27 @@ import Sidebar from '@/components/Sidebar.vue';
 
     .real__content {
         margin: 0 3rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+
+        > * {
+            flex: 1;
+            min-height: 0;
+        }
     }
     
     /* el-scrollbar 占满剩余空间 */
     :deep(.el-scrollbar) {
         flex: 1;
         overflow: hidden;
+    }
+    :deep(.el-scrollbar__wrap) {
+        height: 100%;
+    }
+    :deep(.el-scrollbar__view) {
+        height: 100%;
     }
 }
 
