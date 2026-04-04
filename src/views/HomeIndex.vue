@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, markRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/useUserStore'
 import { useGlobalTheme } from '@/composables/useGlobalTheme'
@@ -45,10 +45,10 @@ interface QuickEntry {
 }
 
 const quickEntries = ref<QuickEntry[]>([
-  { label: '今日计划', path: '/home/plan', icon: CalendarIcon, color: '#E8A87C' },
-  { label: '聊天室', path: '/home/chat', icon: ChatIcon, color: '#D4A574' },
-  { label: '图书馆', path: '/home/library', icon: BookIcon, color: '#C4A77D' },
-  { label: '游戏工厂', path: '/home/game-factory', icon: HammerIcon, color: '#B88A75' },
+  { label: '今日计划', path: '/home/plan', icon: markRaw(CalendarIcon), color: '#E8A87C' },
+  { label: '聊天室', path: '/home/chat', icon: markRaw(ChatIcon), color: '#D4A574' },
+  { label: '图书馆', path: '/home/library', icon: markRaw(BookIcon), color: '#C4A77D' },
+  { label: '游戏工厂', path: '/home/game-factory', icon: markRaw(HammerIcon), color: '#B88A75' },
 ])
 
 const getQuickIconStyle = (color: string) => {
@@ -79,13 +79,13 @@ interface HotItem {
   id: number
   title: string
   tag: string
-  tagType: '' | 'success' | 'warning' | 'danger' | 'info'
+  tagType?: 'success' | 'warning' | 'danger' | 'info'
   heat: number
 }
 
 const hotList = ref<HotItem[]>([
   { id: 1, title: 'Vue 3.5 正式发布，性能再升级', tag: '前端', tagType: 'warning', heat: 9820 },
-  { id: 2, title: 'TypeScript 5.9 新特性全面解读', tag: '技术', tagType: '', heat: 8750 },
+  { id: 2, title: 'TypeScript 5.9 新特性全面解读', tag: '技术', heat: 8750 },
   { id: 3, title: '2026 年度开发者效率工具推荐', tag: '工具', tagType: 'warning', heat: 7430 },
   { id: 4, title: 'AI 辅助编程最佳实践指南', tag: 'AI', tagType: 'danger', heat: 6890 },
   { id: 5, title: '深入浅出 Vite 构建原理', tag: '工程化', tagType: 'info', heat: 5210 },
