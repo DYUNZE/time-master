@@ -35,6 +35,9 @@ const { handleUserLogin } = useLogin();
 
 <style lang="scss" scoped>
 .login-form {
+    width: 100%;
+    max-width: 360px;
+
     .clock {
         margin-bottom: 2rem;
     }
@@ -43,7 +46,7 @@ const { handleUserLogin } = useLogin();
     .form-title {
         text-align: center;
         margin-bottom: 1.5rem;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         color: var(--login-title-color);
         font-weight: bold;
         user-select: none;
@@ -51,36 +54,49 @@ const { handleUserLogin } = useLogin();
 
     /* 表单项 */
     .form-item {
-        margin-bottom: 1.2rem;
+        margin-bottom: 1.25rem;
 
         label {
             display: block;
             margin-bottom: 0.5rem;
+            font-size: 1rem;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.9rem 1rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 8px;
             outline: none;
-        
+            font-size: 1rem;
+            background: var(--color-background);
+            color: var(--color-text);
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
             &:focus {
-                box-shadow: 0 0 7px var(--login-btn-focus-color);
+                border-color: var(--login-btn-focus-color);
+                box-shadow: 0 0 8px var(--login-btn-focus-color);
             }
         }
     }
 
     .login-btn {
         width: 100%;
-        padding: 0.8rem;
+        padding: 0.9rem;
+        margin-top: 0.5rem;
         border: var(--login-btn-border);
         border-radius: .75rem;
         background: var(--login-btn-bg-color);
         color: #fff;
-        font-size: 1rem;
+        font-size: 1.05rem;
+        font-weight: 500;
         cursor: pointer;
         position: relative;
+        transition: transform 0.15s ease;
+
+        &:active {
+            transform: scale(0.98);
+        }
 
         &:hover {
             box-shadow: 0 0 7px #fff;
@@ -120,8 +136,39 @@ const { handleUserLogin } = useLogin();
 }
 
 @media (max-width: 768px) {
-    .form-input {
-        padding: 1rem 4.5rem 1rem 1rem;
+    .login-form {
+        max-width: 100%;
+
+        .clock {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-title {
+            font-size: 1.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-item {
+            margin-bottom: 1.5rem;
+
+            label {
+                font-size: 1.05rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .form-input {
+                padding: 1rem 1.1rem;
+                font-size: 1.05rem;
+                border-radius: 10px;
+            }
+        }
+
+        .login-btn {
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            margin-top: 0.75rem;
+        }
     }
 }
 </style>

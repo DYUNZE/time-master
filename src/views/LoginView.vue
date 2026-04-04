@@ -55,7 +55,9 @@ const {isDark} = useGlobalTheme();
     }
 
     .login-form-wrapper {
+        flex: 1;
         box-shadow: none;
+        padding: 0 1.5rem;
     }
 }
 </style>

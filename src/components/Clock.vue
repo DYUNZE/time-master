@@ -291,4 +291,11 @@ watch(isDark, () => {
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .canvas-clock-container {
+    width: 220px;
+    height: 220px;
+  }
+}
 </style>
