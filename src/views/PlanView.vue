@@ -1,15 +1,15 @@
-<script setup lang='ts'>
-import Plan from '@/components/plan/Plan.vue';
+<script setup lang="ts">
+import Plan from '@/components/plan/Plan.vue'
 </script>
 
 <template>
-    <div class="test">
-        <Plan/>
-        <p v-for="i in 25">2</p>
-    </div>
-    
+  <div class="plan-view">
+    <Plan />
+  </div>
 </template>
 
 <style scoped>
-
+.plan-view {
+  padding-bottom: 1rem;
+}
 </style>
