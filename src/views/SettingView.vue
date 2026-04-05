@@ -6,8 +6,8 @@ const menuList: Readonly<MenuItem[]> = [
   { path: '/home/setting/basic', name: 'Basic', label: '基本信息' },
   { path: '/home/setting/account', name: 'Account', label: '账户' },
   { path: '/home/setting/prefer', name: 'Prefer', label: '偏好设置' },
-  { path: '/home/game-factory', name: 'GameFactory', label: '邮箱通知' },
-  { path: '/home/setting', name: 'Setting', label: '更多' },
+  { path: '/home/setting/email', name: 'Email', label: '邮箱通知' },
+  { path: '/home/setting/more', name: 'More', label: '更多' },
 ];
 
 const route = useRoute();

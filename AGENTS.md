@@ -285,8 +285,7 @@ export default defineConfig({
 
 1. **登录功能**: 当前为模拟登录，仅设置 `loginState` 为 true，无后端验证
 2. **用户头像**: 使用随机图片服务 `https://picsum.photos/200`
-3. **设置页面**: "邮箱通知" 菜单项指向 `/home/game-factory`，疑似配置错误
-4. **API 层**: 项目中存在 `api/` 目录结构说明，但实际未实现后端接口调用
+3. **API 层**: 项目中存在 `api/` 目录结构说明，但实际未实现后端接口调用
 
 ## 扩展建议
 

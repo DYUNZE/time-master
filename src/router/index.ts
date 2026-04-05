@@ -80,6 +80,18 @@ const router = createRouter({
               name: 'Prefer',
               component: ()=> import('@/views/setting/Prefer.vue')
             },
+            {
+              path:'email',
+              name: 'Email',
+              component: ()=> import('@/views/setting/Email.vue'),
+              meta:{title:'邮箱通知'}
+            },
+            {
+              path:'more',
+              name: 'More',
+              component: ()=> import('@/views/setting/More.vue'),
+              meta:{title:'更多'}
+            },
           ]
         }
       ]
